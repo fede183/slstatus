@@ -217,3 +217,25 @@
 		return bprintf("%d", v & 0xff);
 	}
 #endif
+
+char *trimString2(char *str)
+{
+    size_t len = strlen(str);
+
+    while(isspace(str[len - 1])) --len;
+    while(*str && isspace(*str)) ++str, --len;
+
+    return strndup(str, len);
+}
+
+const char *vol_perc_custom(const char *unused)
+{
+	char *volume = (char *)run_command("pactl get-sink-volume @DEFAULT_SINK@");
+	char *split_volume = strdup(volume);
+
+	strsep(&split_volume, "/");
+	char *volume_no_separator = strsep(&split_volume, "/");
+	const char *buf = trimString2(volume_no_separator);
+
+	return buf[0] ? buf : NULL;
+}
