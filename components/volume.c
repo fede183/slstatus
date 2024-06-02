@@ -4,6 +4,7 @@
 #include <string.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
+#include <ctype.h>
 
 #include "../slstatus.h"
 #include "../util.h"
